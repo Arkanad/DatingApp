@@ -13,12 +13,13 @@ namespace API;
 public class AccountController: BaseApiController
 {
     DataContext _context;
-    public AccountController(DataContext context){
+    TokenService _tokenService = new TokenService();
+    public AccountController(DataContext context, ITokenService tokenService){
         _context = context;
     }
 
     [HttpPost("register")]
-    public async Task<ActionResult<AppUser>> Register(RegisterDto registerDto){
+    public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto){
        if(await UserExists(registerDto.Username)){
             return BadRequest("Username is taken");
        }
@@ -34,9 +35,11 @@ public class AccountController: BaseApiController
         _context.Users.Add(user);
         await _context.SaveChangesAsync();
 
-        return user;
+        return new UserDto(){
+            Username = user.UserName,
+            Token = _tokenService.CreateToken(user)
+        };
     } 
-
     
     public async Task<bool> UserExists(string username){
         return await _context.Users.AnyAsync(x => x.UserName == username.ToLower());
