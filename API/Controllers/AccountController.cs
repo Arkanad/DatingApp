@@ -13,9 +13,10 @@ namespace API;
 public class AccountController: BaseApiController
 {
     DataContext _context;
-    TokenService _tokenService = new TokenService();
+    ITokenService _tokenService ;
     public AccountController(DataContext context, ITokenService tokenService){
         _context = context;
+        _tokenService = tokenService;
     }
 
     [HttpPost("register")]
