@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +11,7 @@ export class HomeComponent implements OnInit {
   registerMode = false;
   users: any;
 
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient, private toastr: ToastrService){}
 
   ngOnInit(): void{
     this.getUsers();
@@ -18,6 +19,10 @@ export class HomeComponent implements OnInit {
 
   registerToggle(){
     this.registerMode = !this.registerMode
+  }
+
+  moreInfoButton(){
+    this.toastr.show('Still in development ^_^');
   }
 
   getUsers(){
