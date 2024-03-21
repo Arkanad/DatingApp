@@ -15,6 +15,6 @@ namespace API.Entites{
 
         public int AppUserId {get;set;}
 
-        public AppUser AppUser{get;set;}
+        public AppUser  AppUser{get;set;}
     }
 }

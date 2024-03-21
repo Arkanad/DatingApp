@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace API.Entites;
+namespace API;
 
-public class AppUser
+public class MemberDto
 {
     public int Id {get;set;}
 
@@ -13,11 +13,11 @@ public class AppUser
     
     public byte[] PasswordSalt { get; set; }
 
-    public DateOnly DateOfBirth {get;set;}
+    public int Age {get;set;}
 
     public string KnownAs {get;set;}
 
-    public DateTime Created {get;set;} = DateTime.UtcNow;
+    public DateTime Created {get;set;}
 
     public DateTime LastActive {get; set;}
 
@@ -31,9 +31,5 @@ public class AppUser
 
     public string Country {get;set;}
 
-    public List<Photo> Photos {get;set;} = new();
-
-    public int GetAge(){
-        return DateOfBirth.CalculateAge();
-    }
+    public List<PhotoDto> Photos {get;set;} = new();
 }

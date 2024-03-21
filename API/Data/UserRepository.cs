@@ -25,7 +25,7 @@ public class UserRepository : IUserRepository
     {
         return await _context.Users
         .Include(p => p.Photos)
-        .SingleOrDefaultAsync(x => x.UserName == username);
+        .SingleOrDefaultAsync(x => x.Username == username);
     }
 
     public async Task<IEnumerable<AppUser>> GetUsersAsync()

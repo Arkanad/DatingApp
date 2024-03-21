@@ -14,10 +14,13 @@ using Microsoft.Extensions.Logging;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
+string TokenKey = builder.Configuration.GetSection("TokenKey").Value;
 
 builder.Services.AddControllers();
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 
 var app = builder.Build();
 
@@ -30,6 +33,7 @@ app.UseAuthorization();
 app.UseStaticFiles();
 app.MapControllers();
 app.UseHttpsRedirection();
+
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
