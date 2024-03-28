@@ -38,7 +38,7 @@ public class AccountController: BaseApiController
 
         return new UserDto(){
             Username = user.Username,
-            Token = _tokenService.CreateToken(user)
+            Token = await _tokenService.CreateToken(user)
         };
     } 
     
@@ -47,8 +47,8 @@ public class AccountController: BaseApiController
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<AppUser>> Login(LoginDtoRequest loginDtoRequest){
-        var user = await _context.Users.SingleOrDefaultAsync(x => x.Username == loginDtoRequest.Username);
+    public async Task<ActionResult<UserDto>> Login(LoginDtoRequest loginDtoRequest){
+        var user = await _context.Users.SingleOrDefaultAsync(x => x.Username == loginDtoRequest.Username.ToLower());
 
         if(user == null)
             return Unauthorized("Wrong username");
@@ -62,6 +62,9 @@ public class AccountController: BaseApiController
                 return Unauthorized("Wrong password");
         }
 
-        return user;
+        return new UserDto{
+            Username = user.Username,
+            Token = await _tokenService.CreateToken(user)   
+        };
     }
 }

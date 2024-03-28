@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 using API.Entites;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -17,10 +18,11 @@ public class TokenService : ITokenService
         _key = new SymmetricSecurityKey(Encoding.UTF32.GetBytes(configuration["TokenKey"]));
     }
     
-    public string CreateToken(AppUser appUser)
+    public async Task<string> CreateToken(AppUser appUser)
     {
         var claims = new List<Claim>{
-            new Claim(JwtRegisteredClaimNames.NameId, appUser.Username)
+            new Claim(JwtRegisteredClaimNames.UniqueName, appUser.Username),
+            new Claim(JwtRegisteredClaimNames.NameId, appUser.Id.ToString())
         };
 
         var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
