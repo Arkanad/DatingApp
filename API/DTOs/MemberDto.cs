@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using API.Entites;
 
 namespace API;
 
@@ -29,5 +30,5 @@ public class MemberDto
 
     public string Country {get;set;}
 
-    public List<PhotoDto> Photos {get;set;} = new();
+    public ICollection<Photo> Photos {get;set;}
 }
